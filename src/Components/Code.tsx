@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Prism from "prismjs";
 
-export default function Code({ code, language } : any) {
+const Code = ({ code, language } : any) => {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
@@ -14,3 +14,5 @@ export default function Code({ code, language } : any) {
     </div>
   );
 }
+
+export default Code;

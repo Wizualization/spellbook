@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Html } from '@react-three/drei'
 import Code from './Code';
 //pass block position, code, and language params as props
-module.exports = function Block(props : any){
+const Block = (props : any) => {
     //probably dont need useState for this but maybe will change mind
     const [size, set] = useState(0.5)
     const [hidden, setVisible] = useState(false)
@@ -29,4 +29,5 @@ module.exports = function Block(props : any){
     )
   }
 
+export default Block;
   //module.exports.Block = Block;
