@@ -1,8 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { Primitives } from './Components/Primitives.js';
-//import { Block } from './Components/Block';
-const Block = require('./Components/Block');
+import { Block } from './Components/Block';
+//const Block = require('./Components/Block');
 export {Primitives, Block}
 //module.exports = { Primitives: Primitives, Block: Block};
 

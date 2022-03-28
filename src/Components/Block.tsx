@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+//import { useState } from 'react'
 import { Html } from '@react-three/drei'
 import Code from './Code';
 //pass block position, code, and language params as props
 const Block = (props : any) => {
+    console.log(props)
     //probably dont need useState for this but maybe will change mind
-    const [size, set] = useState(0.5)
-    const [hidden, setVisible] = useState(false)
+    //const [size, set] = useState(0.5)
+    //const [hidden, setVisible] = useState(false)
+    const size = 0.5;
+    const hidden = false;
     //previously an attribute of the Html class: onOcclude={setVisible}
     // but i dont like it and it doesnt work in tsx
     return (
@@ -29,5 +32,5 @@ const Block = (props : any) => {
     )
   }
 
-export default Block;
+export { Block };
   //module.exports.Block = Block;

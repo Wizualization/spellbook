@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Prism from "prismjs";
 
 const Code = ({ code, language } : any) => {
