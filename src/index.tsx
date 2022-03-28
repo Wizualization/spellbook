@@ -1,7 +1,6 @@
-//import Block from './Components/Block.js';
+import Block from './Components/Block';
 import { Primitives } from './Components/Primitives.js';
-//Block,
-export { Primitives};
+export { Primitives, Block};
 
 /*
 import React from 'react';
