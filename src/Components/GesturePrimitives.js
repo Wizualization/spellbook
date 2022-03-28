@@ -1,4 +1,4 @@
-export function Primitives(){
+export function GesturePrimitives(){
     return [
         {
             "key": "a07ff089-2ca2-1341-cc58-74509f1d8577",

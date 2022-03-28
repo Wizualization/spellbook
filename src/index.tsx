@@ -1,7 +1,7 @@
-import { Primitives } from './Components/Primitives.js';
-import { Block } from './Components/Block';
+import { GesturePrimitives } from './Components/GesturePrimitives.js';
+import { SpellBlock } from './Components/SpellBlock';
 //const Block = require('./Components/Block');
-export {Primitives, Block}
+export {GesturePrimitives, SpellBlock}
 //module.exports = { Primitives: Primitives, Block: Block};
 
 /*

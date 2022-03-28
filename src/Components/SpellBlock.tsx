@@ -1,8 +1,8 @@
 //import { useState } from 'react'
 import { Html } from '@react-three/drei'
-import Code from './Code';
+import SpellCode from './SpellCode';
 //pass block position, code, and language params as props
-const Block = (props : any) => {
+const SpellBlock = (props : any) => {
     console.log(props)
     //probably dont need useState for this but maybe will change mind
     //const [size, set] = useState(0.5)
@@ -26,11 +26,11 @@ const Block = (props : any) => {
           transform
           occlude
         >
-          <Code code={props.code} language={props.language} />
+          <SpellCode code={props.code} language={props.language} />
         </Html>
       </mesh>
     )
   }
 
-export { Block };
+export { SpellBlock };
   //module.exports.Block = Block;
