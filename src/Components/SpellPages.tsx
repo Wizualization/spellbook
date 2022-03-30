@@ -50,23 +50,29 @@ function Page({ position = [0.06, 0.06, 0.06], code, language }: any) {
       const left_isNear = Math.max(0, 1 - index0.position.distanceTo(blockRef.current?.position) / 0.1) > 0.52
       const right_isNear = Math.max(0, 1 - index1.position.distanceTo(blockRef.current?.position) / 0.1) > 0.52
       if(left_isNear){
-        const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.52
+        const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.8
         if(grabPinch_left){
           //blockRef.current?.position.set(index0.position.x, index0.position.y, index0.position.z);
           blockRef.current.position.x = index0.position.x;
           blockRef.current.position.y = index0.position.y;
           blockRef.current.position.z = index0.position.z;
+          blockRef.current.rotation.x = index0.rotation.x;
+          blockRef.current.rotation.y = index0.rotation.y;
+          blockRef.current.rotation.z = index0.rotation.z;
         }
       } else {
         //lefty dominance if trying to grab with both hands, which the user should never do bc it will craft a spell lol
         if(right_isNear){
-          const grabPinch_right = Math.max(0, 1 - index1.position.distanceTo(thumb1.position) / 0.1) > 0.52
+          const grabPinch_right = Math.max(0, 1 - index1.position.distanceTo(thumb1.position) / 0.1) > 0.8
           if(grabPinch_right){
             //blockRef.current?.position.set(index1.position.x, index1.position.y, index1.position.z);
             blockRef.current.position.x = index1.position.x;
             blockRef.current.position.y = index1.position.y;
             blockRef.current.position.z = index1.position.z;
-            }
+            blockRef.current.rotation.x = index1.rotation.x;
+            blockRef.current.rotation.y = index1.rotation.y;
+            blockRef.current.rotation.z = index1.rotation.z;
+              }
             
         }
     
