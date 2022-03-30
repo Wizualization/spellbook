@@ -36,7 +36,6 @@ export const joints = [
 
 function Page({ position = [0.06, 0.06, 0.06], code, language }: any) {
   const blockRef = useRef<Mesh | null>();
-  /*
   const { gl } = useThree()
   const hand0 = (gl.xr as any).getHand(0) as any;
   const hand1 = (gl.xr as any).getHand(1) as any;
@@ -53,22 +52,27 @@ function Page({ position = [0.06, 0.06, 0.06], code, language }: any) {
       if(left_isNear){
         const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.52
         if(grabPinch_left){
-          blockRef.current?.position.set(index0.position);
+          //blockRef.current?.position.set(index0.position.x, index0.position.y, index0.position.z);
+          blockRef.current.position.x = index0.position.x;
+          blockRef.current.position.y = index0.position.y;
+          blockRef.current.position.z = index0.position.z;
         }
       } else {
         //lefty dominance if trying to grab with both hands, which the user should never do bc it will craft a spell lol
         if(right_isNear){
           const grabPinch_right = Math.max(0, 1 - index1.position.distanceTo(thumb1.position) / 0.1) > 0.52
           if(grabPinch_right){
-            blockRef.current?.position.set(index1.position);
-          }
+            //blockRef.current?.position.set(index1.position.x, index1.position.y, index1.position.z);
+            blockRef.current.position.x = index1.position.x;
+            blockRef.current.position.y = index1.position.y;
+            blockRef.current.position.z = index1.position.z;
+            }
             
         }
     
       }
     }
   });
-  */
   return (
       <mesh ref={blockRef} position={position}>
         <SpellBlock code={code} language={language} />
