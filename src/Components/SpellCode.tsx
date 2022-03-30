@@ -2,14 +2,16 @@
 import { Suspense } from 'react';
 import { VRHtml } from './VRHtml'
 import Prism from "prismjs";
+//import loadLanguages from 'prismjs/components/index.js';
 import './prism.min.css';
 
 const SpellCode = ({ code, language } : any) => {
+  //loadLanguages([language]);
   const hidden = false;
 
   //Prism.highlightAll(); //does this happen async without needed to be inside useEffect?
   const highlightedText = Prism.highlight(code, Prism.languages[language], language);
-  console.log(highlightedText);
+  //console.log(highlightedText);
   /*useEffect(() => {
     Prism.highlightAll();
   }, []);*/

@@ -1,7 +1,8 @@
 import { GesturePrimitives } from './Components/GesturePrimitives.js';
-import { SpellBlock } from './Components/SpellBlock';
+import { SpellPages } from './Components/SpellPages';
 //const Block = require('./Components/Block');
-export {GesturePrimitives, SpellBlock}
+//export pages, requires an array of spells of type {'code':`string of code`,'language': 'language code is written in'}
+export {GesturePrimitives, SpellPages}
 //module.exports = { Primitives: Primitives, Block: Block};
 
 /*

@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-
+// credit: https://github.com/pmndrs/react-xr/issues/21#issuecomment-982593707
 // Prevents html2canvas warnings
 // @todo maybe remove this if it causes performance issues?
 /*

@@ -26,5 +26,9 @@ cd ../@react-three/fiber
 npm link
 cd ../../@react-three/drei
 npm link
+cd ../../@react-three/cannon
+npm link
+cd ../../@react-three/xr
+npm link
 cd ../../..
 ```

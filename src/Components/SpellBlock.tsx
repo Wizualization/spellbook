@@ -12,6 +12,7 @@ const SpellBlock = (props : any) => {
     // no longer needed 
     //<boxGeometry args={[size, size, 0.01]}/>
     //<meshStandardMaterial />
+  //hold off on these attributes of mesh for now: position={props.position} rotation={props.rotation}
 return (
       <mesh scale={size}>
           <SpellCode code={props.code} language={props.language} />
