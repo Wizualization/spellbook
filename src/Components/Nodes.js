@@ -34,20 +34,27 @@ function Nodes({ children, ...props }) {
         connections.forEach(([start, end]) => {
           start = start?.clone().add(temp.set(0.25, 0, 0))
           end = end?.clone().add(temp.set(-0.25, 0, 0))
-          let mid = new THREE.Vector3(0,0,0);
+          let mid1 = new THREE.Vector3(0,0,0);
+          let mid2 = new THREE.Vector3(0,0,0);
           if(typeof start != 'undefined' && typeof end != 'undefined'){
             //have the midpoint y axis be (start?.y - end?.y) or 0?
-            mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), 0, (start?.z - end?.z))) // prettier-ignore
+            mid1 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x), start?.y-0.15, start?.z)) // prettier-ignore
+            mid2 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3(end?.x, end?.y+0.15, end?.z)) // prettier-ignore
+            //original
+            //mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), 0, (start?.z - end?.z))) // prettier-ignore
           } 
-          lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
+          //lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
+          lines.push(new THREE.CubicBezierCurve3(start, mid1, mid2, end).getPoints(20))
         })
       }
     }
     return lines
   }, [nodes])
 
+
   const group = useRef()
-  useFrame((_, delta) => group.current.children.forEach((line) => (line.material.uniforms.dashOffset.value -= delta)))
+  //-= delta was original direction but we want the lines to flow backward because that's our forward
+  useFrame((_, delta) => group.current.children.forEach((line) => (line.material.uniforms.dashOffset.value += delta)))
 
   return (
     <context.Provider value={set}>
@@ -80,9 +87,11 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
     return () => set((nodes) => without(nodes, state))
   }, [state, pos])
 
-  // Drag n drop, hover
+  // Drag n drop, hover; neither of these relevant in xr
+  /*
   const [hovered, setHovered] = useState(false)
-  useEffect(() => (document.body.style.cursor = hovered ? 'grab' : 'auto'), [hovered])
+  useEffect(() => (document.body.style.cursor = hovered ? 'grab' : 'auto'), [hovered])*/
+  
   /*const bind = useDrag(({ down, xy: [x, y] }) => {
     document.body.style.cursor = down ? 'grabbing' : 'grab'
     const unprojectedPoint = temp
@@ -100,24 +109,32 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
     //const hand1 = (gl.xr as any).getHand(1) as any;
     const hand0 = (gl.xr).getHand(0);
     const hand1 = (gl.xr).getHand(1);
-  
+    let frame = 0;
+    let lastframe = 0;
     useFrame(() => {
       if (!ref.current) return
       const index0 = hand0.joints['index-finger-tip']
       const index1 = hand1.joints['index-finger-tip']
       const thumb0 = hand0.joints['thumb-tip']
       const thumb1 = hand1.joints['thumb-tip']
-      if(index0 && index1){
-        const left_isNear = Math.max(0, 1 - index0.position.distanceTo(ref.current?.position) / 0.1) > 0.8
-        const right_isNear = Math.max(0, 1 - index1.position.distanceTo(ref.current?.position) / 0.1) > 0.8
+      /*//this shows that it never makes it past the point of checking whether there is a ref.current; why???
+        frame++;
+        if(frame+30 > lastframe){
+          if(index0){console.log(JSON.stringify(index0.position))}
+          console.log(JSON.stringify(ref.current.position))
+          lastframe = 1*frame;
+        }*/
+        if(index0 && index1){
+          const left_isNear = Math.max(0, 1 - index0.position.distanceTo(ref.current.position) / 0.1) > 0.8
+        const right_isNear = Math.max(0, 1 - index1.position.distanceTo(ref.current.position) / 0.1) > 0.8
         if(left_isNear){
           const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.6
           if(grabPinch_left){
             //ref.current?.position.set(index0.position.x, index0.position.y, index0.position.z);
-            /*ref.current.position.x = index0.position.x;
+            ref.current.position.x = index0.position.x;
             ref.current.position.y = index0.position.y;
-            ref.current.position.z = index0.position.z;*/
-            setPos(index0.position);
+            ref.current.position.z = index0.position.z;
+            setPos(index0.position); //setpos needed for line but insufficient for node
             ref.current.rotation.x = index0?.rotation.x;
             ref.current.rotation.y = index0?.rotation.y;
             ref.current.rotation.z = index0?.rotation.z;
@@ -128,10 +145,10 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
             const grabPinch_right = Math.max(0, 1 - index1.position.distanceTo(thumb1.position) / 0.1) > 0.6
             if(grabPinch_right){
               //ref.current?.position.set(index1.position.x, index1.position.y, index1.position.z);
-              /*ref.current.position.x = index1.position.x;
+              ref.current.position.x = index1.position.x;
               ref.current.position.y = index1.position.y;
-              ref.current.position.z = index1.position.z;*/
-              setPos(index1.position);
+              ref.current.position.z = index1.position.z;
+              setPos(index1.position); //setpos needed for line
               ref.current.rotation.x = index1?.rotation.x;
               ref.current.rotation.y = index1?.rotation.y;
               ref.current.rotation.z = index1?.rotation.z;
