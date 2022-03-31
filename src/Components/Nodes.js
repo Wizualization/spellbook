@@ -24,11 +24,20 @@ function Nodes({ children, ...props }) {
     const lines = []
     for (let node of nodes) {
       if (node.connectedTo.length) {
-        const connections = node.connectedTo.map((ref) => [node.position, ref.current?.position])
+        const connections = node.connectedTo?.map((ref) => {
+          if(ref){
+            return [node.position, ref.current?.position]
+          } else {
+            return [node.position, new THREE.Vector3(0,0,0)]
+          }
+        })
         connections.forEach(([start, end]) => {
-          start = start.clone().add(temp.set(0.25, 0, 0))
-          end = end.clone().add(temp.set(-0.25, 0, 0))
-          const mid = start.clone().add(end.clone().sub(start)).add(new THREE.Vector3(0, (start.y - end.y), 0)) // prettier-ignore
+          start = start?.clone().add(temp.set(0.25, 0, 0))
+          end = end?.clone().add(temp.set(-0.25, 0, 0))
+          let mid = new THREE.Vector3(0,0,0);
+          if(typeof start != 'undefined' && typeof end != 'undefined'){
+            mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3(0, (start?.y - end?.y), 0)) // prettier-ignore
+          } 
           lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
         })
       }
@@ -108,9 +117,9 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
             ref.current.position.y = index0.position.y;
             ref.current.position.z = index0.position.z;*/
             setPos(index0.position);
-            ref.current.rotation.x = index0.rotation.x;
-            ref.current.rotation.y = index0.rotation.y;
-            ref.current.rotation.z = index0.rotation.z;
+            ref.current.rotation.x = index0?.rotation.x;
+            ref.current.rotation.y = index0?.rotation.y;
+            ref.current.rotation.z = index0?.rotation.z;
           }
         } else {
           //lefty dominance if trying to grab with both hands, which the user should never do bc it will craft a spell lol
@@ -122,9 +131,9 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
               ref.current.position.y = index1.position.y;
               ref.current.position.z = index1.position.z;*/
               setPos(index1.position);
-              ref.current.rotation.x = index1.rotation.x;
-              ref.current.rotation.y = index1.rotation.y;
-              ref.current.rotation.z = index1.rotation.z;
+              ref.current.rotation.x = index1?.rotation.x;
+              ref.current.rotation.y = index1?.rotation.y;
+              ref.current.rotation.z = index1?.rotation.z;
                 }
               
           }
