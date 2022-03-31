@@ -200,7 +200,7 @@ useFrame(()=>{
         <Node key={"node_"+i.toString()}  
           ref={ref => pageRefs[i] = ref } 
           name={"node_"+i.toString()} 
-          position={[0.1*i, 0.1*i, 1]}  
+          position={[0.1*i, 1, 0.1*i]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
           connectedTo={[pageRefs[i-1]]}
@@ -208,7 +208,7 @@ useFrame(()=>{
         <Node key={"node_"+i.toString()}  
           ref={ref => pageRefs[i] = ref } 
           name={"node_"+i.toString()} 
-          position={[0.1*i, 0.1*i, 1]}  
+          position={[0.1*i, 1, 0.1*i]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
         /> 
