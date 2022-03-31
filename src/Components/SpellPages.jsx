@@ -198,19 +198,19 @@ useFrame(()=>{
     <Nodes dashed color="#ff1050" lineWidth={1}>
       {[...Array(props.spells.length)].map((_, i) => (i > 0 ? 
         <Node key={"node_"+i.toString()}  
-          ref={ref => pageRefs[i] = ref } 
+          ref={pageRefs[i]} 
           name={"node_"+i.toString()} 
-          position={[Math.PI*0.1*i, 2, Math.PI*0.1*i]}  
-          rotation={[Math.PI*0.1*i, 0, Math.PI*0.1*i]}  
+          position={[Math.PI*0.1*i, 1.5, Math.PI*0.1*i]}  
+          rotation={[0, 0, Math.PI*0.1*i]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
-          connectedTo={[pageRefs[i-1]]}
+          connectedTo={[pageRefs[(i-1)]]}
         /> : 
         <Node key={"node_"+i.toString()}  
-          ref={ref => pageRefs[i] = ref } 
+          ref={pageRefs[i]} 
           name={"node_"+i.toString()} 
-          position={[Math.PI*0.1*i, 2, Math.PI*0.1*i]}  
-          rotation={[Math.PI*0.1*i, 0, Math.PI*0.1*i]}  
+          position={[Math.PI*0.1*i, 1.5, Math.PI*0.1*i]}  
+          rotation={[0, 0, Math.PI*0.1*i]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
         /> 

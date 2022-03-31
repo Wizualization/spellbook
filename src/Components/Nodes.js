@@ -32,19 +32,21 @@ function Nodes({ children, ...props }) {
           }
         })
         connections.forEach(([start, end]) => {
-          start = start?.clone().add(temp.set(0.25, 0, 0))
-          end = end?.clone().add(temp.set(-0.25, 0, 0))
-          let mid1 = new THREE.Vector3(0,0,0);
+          start = start?.clone().add(temp.set(0, 0, 0))
+          end = end?.clone().add(temp.set(0, 0, 0))
+          /*let mid1 = new THREE.Vector3(0,0,0);
           let mid2 = new THREE.Vector3(0,0,0);
+          */
+          let mid = new THREE.Vector3(0,0,0);
           if(typeof start != 'undefined' && typeof end != 'undefined'){
             //have the midpoint y axis be (start?.y - end?.y) or 0?
-            mid1 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x), start?.y-0.15, start?.z)) // prettier-ignore
-            mid2 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3(end?.x, end?.y+0.15, end?.z)) // prettier-ignore
+            /*mid1 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x-0.5*end?.x), start?.y-0.05, (start?.z-0.5*end?.z))) // prettier-ignore
+            mid2 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3(end?.x, end?.y+0.05, end?.z)) // prettier-ignore*/
             //original
-            //mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), 0, (start?.z - end?.z))) // prettier-ignore
+            mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), start?.x + 0.01, (start?.z - end?.z))) // prettier-ignore
           } 
-          //lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
-          lines.push(new THREE.CubicBezierCurve3(start, mid1, mid2, end).getPoints(20))
+          lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
+          //lines.push(new THREE.CubicBezierCurve3(start, mid1, mid2, end).getPoints(20))
         })
       }
     }
@@ -112,6 +114,7 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
     let frame = 0;
     let lastframe = 0;
     useFrame(() => {
+      if (!ref) return
       if (!ref.current) return
       const index0 = hand0.joints['index-finger-tip']
       const index1 = hand1.joints['index-finger-tip']
