@@ -10,10 +10,12 @@ const temp = new THREE.Vector3()
 const context = createContext()
 
 function Dot(props) {
+  //decided i dont actually want these circles for now, removed
+  //      <circleGeometry args={[0.05, 16]} />
+  //      <meshBasicMaterial color="#ff1050" />
+
   return (
     <mesh {...props}>
-      <circleGeometry args={[0.05, 16]} />
-      <meshBasicMaterial color="#ff1050" />
     </mesh>
   )
 }
@@ -43,9 +45,9 @@ function Nodes({ children, ...props }) {
             /*mid1 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x-0.5*end?.x), start?.y-0.05, (start?.z-0.5*end?.z))) // prettier-ignore
             mid2 = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3(end?.x, end?.y+0.05, end?.z)) // prettier-ignore*/
             //original
-            mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), start?.x + 0.01, (start?.z - end?.z))) // prettier-ignore
+            mid = start?.clone().add(end?.clone().sub(start)).add(new THREE.Vector3((start?.x - end?.x), start?.y + 0.1, (start?.z - end?.z))) // prettier-ignore
           } 
-          lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(20))
+          lines.push(new THREE.QuadraticBezierCurve3(start, mid, end).getPoints(30))
           //lines.push(new THREE.CubicBezierCurve3(start, mid1, mid2, end).getPoints(20))
         })
       }
@@ -62,14 +64,14 @@ function Nodes({ children, ...props }) {
     <context.Provider value={set}>
       <group ref={group}>
         {lines.map((points, index) => (
-          <Line key={index} points={points} color="white" dashed dashScale={5} />
+          <Line key={index} points={points} color="white" dashed dashScale={10} />
         ))}
       </group>
       {children}
       {lines.map((points, i) => (
-        <group key={i} position-z={1}>
+        <group key={i} position-z={0.25}>
           <Dot position={points[0]} />
-          <Dot position={points[points.length - 1]} />
+          <Dot position={points[points.length - 0.25]} />
         </group>
       ))}
     </context.Provider>
