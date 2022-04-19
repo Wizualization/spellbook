@@ -148,6 +148,61 @@ function SpellPages(props ) { //: any
     //pageRefs.current = pageRefs.current.slice(0, props.spells.length);
     //linkRefs.current = linkRefs.current.slice(0, props.spells.length-1);
  }, [props.spells]);
+
+ //we were only using this for pushing the grab and move up the heirarchy but maybe we don't want to do that
+ /*
+ const { gl } = useThree()
+ //const hand0 = (gl.xr as any).getHand(0) as any;
+ //const hand1 = (gl.xr as any).getHand(1) as any;
+ const hand0 = (gl.xr).getHand(0);
+ const hand1 = (gl.xr).getHand(1);
+
+ useFrame(() => {
+   for(let pageRef in pageRefs){
+    if (pageRef.current){
+      const index0 = hand0.joints['index-finger-tip']
+      const index1 = hand1.joints['index-finger-tip']
+      const thumb0 = hand0.joints['thumb-tip']
+      const thumb1 = hand1.joints['thumb-tip']
+      if(index0 && index1){
+        const left_isNear = Math.max(0, 1 - index0.position.distanceTo(pageRef.current?.position) / 0.1) > 0.8
+        const right_isNear = Math.max(0, 1 - index1.position.distanceTo(pageRef.current?.position) / 0.1) > 0.8
+        if(left_isNear){
+          const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.6
+          if(grabPinch_left){
+            //blockRef.current?.position.set(index0.position.x, index0.position.y, index0.position.z);
+            pageRef.current.position.x = index0.position.x;
+            pageRef.current.position.y = index0.position.y;
+            pageRef.current.position.z = index0.position.z;
+            pageRef.current.rotation.x = index0.rotation.x;
+            pageRef.current.rotation.y = index0.rotation.y;
+            pageRef.current.rotation.z = index0.rotation.z;
+          }
+        } else {
+          //lefty dominance if trying to grab with both hands, which the user should never do bc it will craft a spell lol
+          if(right_isNear){
+            const grabPinch_right = Math.max(0, 1 - index1.position.distanceTo(thumb1.position) / 0.1) > 0.6
+            if(grabPinch_right){
+              //blockRef.current?.position.set(index1.position.x, index1.position.y, index1.position.z);
+              pageRef.current.position.x = index1.position.x;
+              pageRef.current.position.y = index1.position.y;
+              pageRef.current.position.z = index1.position.z;
+              pageRef.current.rotation.x = index1.rotation.x;
+              pageRef.current.rotation.y = index1.rotation.y;
+              pageRef.current.rotation.z = index1.rotation.z;
+                }
+              
+          }
+      
+        }
+      }
+   
+     }
+   
+   }
+});
+*/
+
 /*
 useFrame(()=>{
   const lines = [];
@@ -201,7 +256,7 @@ useFrame(()=>{
           ref={pageRefs[i]} 
           name={"node_"+i.toString()} 
           position={[Math.PI*0.1*i, 1.5, Math.PI*0.1*i]}  
-          rotation={[0, 0, Math.PI*0.1*i]}  
+          rotation={[Math.PI*0.1*i, 0, 0]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
           connectedTo={[pageRefs[(i-1)]]}
@@ -210,7 +265,7 @@ useFrame(()=>{
           ref={pageRefs[i]} 
           name={"node_"+i.toString()} 
           position={[Math.PI*0.1*i, 1.5, Math.PI*0.1*i]}  
-          rotation={[0, 0, Math.PI*0.1*i]}  
+          rotation={[Math.PI*0.1*i, 0, 0]}  
           code={props.spells[i]['code']} 
           language={props.spells[i]['language']} 
         /> 

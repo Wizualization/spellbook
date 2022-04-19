@@ -130,8 +130,8 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
           lastframe = 1*frame;
         }*/
         if(index0 && index1){
-          const left_isNear = Math.max(0, 1 - index0.position.distanceTo(ref.current.position) / 0.1) > 0.8
-        const right_isNear = Math.max(0, 1 - index1.position.distanceTo(ref.current.position) / 0.1) > 0.8
+          const left_isNear = Math.max(0, 1 - index0.position.distanceTo(ref.current.position) / 1) > 0.8
+        const right_isNear = Math.max(0, 1 - index1.position.distanceTo(ref.current.position) / 1) > 0.8
         if(left_isNear){
           const grabPinch_left = Math.max(0, 1 - index0.position.distanceTo(thumb0.position) / 0.1) > 0.6
           if(grabPinch_left){
@@ -139,10 +139,10 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
             ref.current.position.x = index0.position.x;
             ref.current.position.y = index0.position.y;
             ref.current.position.z = index0.position.z;
-            setPos(index0.position); //setpos needed for line but insufficient for node
             ref.current.rotation.x = index0?.rotation.x;
             ref.current.rotation.y = index0?.rotation.y;
             ref.current.rotation.z = index0?.rotation.z;
+            setPos(ref.current.position);
           }
         } else {
           //lefty dominance if trying to grab with both hands, which the user should never do bc it will craft a spell lol
@@ -153,11 +153,12 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
               ref.current.position.x = index1.position.x;
               ref.current.position.y = index1.position.y;
               ref.current.position.z = index1.position.z;
-              setPos(index1.position); //setpos needed for line
               ref.current.rotation.x = index1?.rotation.x;
               ref.current.rotation.y = index1?.rotation.y;
               ref.current.rotation.z = index1?.rotation.z;
-                }
+              setPos(ref.current.position);
+
+            }
               
           }
       
@@ -166,9 +167,11 @@ const Node = forwardRef(({ name, connectedTo = [], position = [0, 0, 0], ...prop
     });
   
   return (
-    <mesh ref={ref} position={pos} {...props}>
+    <mesh ref={ref} position={position} {...props}>
       <Suspense fallback={<></>}>
+        <mesh>
         <SpellBlock code={props.code} language={props.language} />
+        </mesh>
       </Suspense>
     </mesh>
   )
